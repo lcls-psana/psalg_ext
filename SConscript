@@ -43,6 +43,10 @@ assert env.get('CONDA',False), "not conda build"
 pkg = "psalg"
 PREFIX = prefixForBuildExternal(pkg)
 
+# HACK: shouldl have proper dependencies setup within SCons, then we could get
+# ndarray and boost from geninc. For now, we are assuming ndarray is checked out in the
+# proper place, and that boost is in the conda environent. Note - put ndarray first in the
+# make line, if an old version of ndarray is the conda env, problems.
 ndarrinc = '../ndarray'
 boostinc = pjoin(env['CONDA_ENV_PATH'], 'include')
 buildcmds = [ 
