@@ -47,14 +47,17 @@ PREFIX = prefixForBuildExternal(pkg)
 # ndarray and boost from geninc. For now, we are assuming ndarray is checked out in the
 # proper place, and that boost is in the conda environent. Note - put ndarray first in the
 # make line, if an old version of ndarray is the conda env, problems.
-ndarrinc = '../ndarray'
+ndarrinc = pjoin(env['CONDA_ENV_PATH'], 'include')
 boostinc = pjoin(env['CONDA_ENV_PATH'], 'include')
 buildcmds = [ 
     "make -C %s CFLAGS='-I%s -I%s' x86_64-linux-opt" % (pkg, ndarrinc, boostinc),
     "make -C %s INSTALLDIR=%s install" % (pkg, PREFIX),
 ]
 
-buildExternalPackage(pkg=pkg, buildcmds=buildcmds, PREFIX=PREFIX, startdir='parent')
+buildExternalPackage(pkg=pkg, buildcmds=buildcmds,
+                     PREFIX=PREFIX,
+                     ONE_TARGET='lib/libpsalg.so',
+                     startdir='parent')
 
 INCDIR = "psalg"
 LIBDIR = "lib"
